@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 const UpdateTest = ({ route }) => {
-  const { patientID } = route.params;
+  const { patientID = null } = route.params || {}; 
 
   // State variables for critical data
   const [respiratoryRate, setRespiratoryRate] = useState(12);
@@ -13,6 +13,7 @@ const UpdateTest = ({ route }) => {
   const [heartRate, setHeartRate] = useState(40);
   const [bodyTemperature, setBodyTemperature] = useState(97);
 
+  
   // State variable for doctor's note
   const [showTextBars, setShowTextBars] = useState({
     doctorsNote: false,
@@ -20,11 +21,50 @@ const UpdateTest = ({ route }) => {
 
   const [inputText, setInputText] = useState('');
 
+  // Check if patientID is undefined and navigate back if needed
   const navigation = useNavigation();
+  useEffect(() => {
+    if (!patientID) {
+      console.error('Error: Patient ID is undefined. Route params:', route.params);
+      Alert.alert(
+        'Error',
+        'Patient ID is missing. Please go back and try again.',
+        [
+          {
+            text: 'OK',
+            onPress: () => navigation.goBack(),
+          },
+        ],
+        { cancelable: false }
+      );
+    }
+  }, [patientID, route.params]);
 
   useEffect(() => {
     const patientDetails = route.params?.patientDetails;
-
+    const patientIDFromRoute = route.params?.patientID;
+  
+    // Check if patientID is present in route params
+    if (!patientIDFromRoute) {
+      console.error('Error: Patient ID is undefined. Route params:', route.params);
+      Alert.alert(
+        'Error',
+        'Patient ID is missing. Please go back and try again.',
+        [
+          {
+            text: 'OK',
+            onPress: () => navigation.goBack(),
+          },
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+  
+    // Set patientID from route params
+    setPatientID(patientIDFromRoute);
+  
+    // Set initial values based on patientDetails
     if (patientDetails) {
       setRespiratoryRate(patientDetails.respiratoryRate || 12);
       setBloodPressure(patientDetails.bloodPressure || 70);
@@ -32,7 +72,8 @@ const UpdateTest = ({ route }) => {
       setHeartRate(patientDetails.heartRate || 40);
       setBodyTemperature(patientDetails.bodyTemperature || 97);
     }
-  }, [route.params?.patientDetails]);
+  }, [route.params?.patientDetails, route.params?.patientID]);
+  
 
   // Function to handle increment of critical data
   const handleIncrement = (field) => {
@@ -61,19 +102,19 @@ const UpdateTest = ({ route }) => {
   const handleDecrement = (field) => {
     switch (field) {
       case 'respiratoryRate':
-        setRespiratoryRate(Math.max(respiratoryRate - 1, 12));
+        setRespiratoryRate(Math.min(respiratoryRate - 1, 12));
         break;
       case 'bloodPressure':
-        setBloodPressure(Math.max(bloodPressure - 1, 70));
+        setBloodPressure(Math.min(bloodPressure - 1, 70));
         break;
       case 'oxygenSaturation':
-        setOxygenSaturation(Math.max(oxygenSaturation - 1, 95));
+        setOxygenSaturation(Math.min(oxygenSaturation - 1, 95));
         break;
       case 'heartRate':
-        setHeartRate(Math.max(heartRate - 1, 40));
+        setHeartRate(Math.min(heartRate - 1, 40));
         break;
       case 'bodyTemperature':
-        setBodyTemperature(Math.max(bodyTemperature - 1, 97));
+        setBodyTemperature(Math.min(bodyTemperature - 1, 97));
         break;
       default:
         break;
@@ -91,7 +132,7 @@ const UpdateTest = ({ route }) => {
   const handleSave = async () => {
     try {
       if (!patientID) {
-        console.error('Patient ID is undefined.');
+        console.error('Error: Patient ID is undefined. Route params:', route.params);
         // Handle the error or show an alert to the user
         return;
       }

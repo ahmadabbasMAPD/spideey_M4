@@ -70,10 +70,12 @@ const AddPatients = () => {
       });
 
       if (response.data) {
+        const patientID = response.data._id;
         console.log('New patient added with ID:', response.data._id);
         Alert.alert('Patient Added', 'Patient details successfully added.');
-        navigation.navigate('CareProviderHomePage', {
+        navigation.navigate('CareProviderHomePage', { patientID },{
           addedPatient: response.data,
+          patientID: response.data._id,
         });
       } else {
         Alert.alert('Error', 'Failed to add patient. Please try again.');

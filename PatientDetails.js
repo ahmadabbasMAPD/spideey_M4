@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import axios from 'axios';
 
+
 const PatientDetails = ({ route, navigation }) => {
-  const { patientID } = route.params;
+  const { patientID } = route.params || {};
   const [patientDetails, setPatientDetails] = useState({});
   const updatedCriticalInfo = route.params?.updatedCriticalInfo;
+  
 
   useEffect(() => {
     fetchPatientDetails();
@@ -51,29 +53,56 @@ const PatientDetails = ({ route, navigation }) => {
   };
 
   const handleDeleteTest = async () => {
-    try {
-      const response = await axios.delete(`http://127.0.0.1:5000/Patients/${patientID}/tests/${patientDetails._id}`);
-      if (response.status === 200) {
-        console.log('Test deleted successfully:', response.data);
-        const updatedPatientDetails = response.data.updatedPatient;
-        setPatientDetails(updatedPatientDetails);
-        // You can perform any UI updates or navigation logic here after successful deletion
-      } else {
-        console.error('Failed to delete test:', response.data.message);
-      }
-    } catch (error) {
-      console.error('Error deleting test:', error.message); // Log the detailed error message
-      // Handle the error as needed
+  try {
+    if (!patientDetails._id) {
+      console.error('Error: Test ID is missing. Patient details:', patientDetails);
+      return;
     }
-  };
+
+    console.log('Deleting test for patient with ID:', patientID, 'and test ID:', patientDetails._id);
+
+    Alert.alert(
+      'Delete Test',
+      `Are you sure you want to delete the test for patient with ID: ${patientID}?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: async () => {
+            try {
+              const response = await axios.delete(`http://127.0.0.1:5000/Patients/${patientID}/tests/${patientDetails._id}`);
+              if (response.status === 200) {
+                console.log('Test deleted successfully:', response.data);
+                const updatedPatientDetails = response.data.updatedPatient;
+                setPatientDetails(updatedPatientDetails);
+                // You can perform any UI updates or navigation logic here after successful deletion
+              } else {
+                console.error('Failed to delete test:', response.data.message);
+              }
+            } catch (error) {
+              console.error('Error deleting test:', error.message);
+              // Handle the error as needed
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  } catch (error) {
+    console.error('Error handling delete test:', error.message);
+    // Handle the error as needed
+  }
+};
+
 
   const handleUpdateTests = () => {
     if (patientDetails && Object.keys(patientDetails).length > 0) {
       // If patientDetails has data, navigate to UpdateTest screen
-      navigation.navigate('UpdateTest', {
-        patientID,
-        // Pass other necessary data to the UpdateTest screen if needed
-      });
+      navigation.navigate('UpdateTest', { patientID });
+
     } else {
       // If patientDetails is not available, show an alert message
       Alert.alert(
