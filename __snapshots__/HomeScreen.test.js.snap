@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders PatientCard correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#000",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <Image
+    source={1}
+    style={
+      {
+        "borderColor": "#00FF00",
+        "borderRadius": 75,
+        "borderWidth": 2,
+        "height": 150,
+        "marginBottom": 20,
+        "resizeMode": "cover",
+        "width": 150,
+      }
+    }
+  />
+  <Text
+    style={
+      [
+        {
+          "color": "#FFFFFF",
+        },
+        {
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "marginTop": 10,
+          "textShadowColor": "rgba(0, 0, 0, 0.75)",
+          "textShadowOffset": {
+            "height": 1,
+            "width": -1,
+          },
+          "textShadowRadius": 10,
+        },
+      ]
+    }
+  >
+    HealthSync
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#FFFFFF",
+        },
+        {
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "marginBottom": 50,
+        },
+      ]
+    }
+  >
+    Seamless Care, Empowering Lives
+  </Text>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#00FF00",
+        "borderRadius": 10,
+        "marginTop": 20,
+        "opacity": 1,
+        "padding": 15,
+        "width": 200,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#000000",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Login as a Careprovider
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#00FF00",
+        "borderRadius": 10,
+        "marginTop": 20,
+        "opacity": 1,
+        "padding": 15,
+        "width": 200,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#000000",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Login as a User
+    </Text>
+  </View>
+</View>
+`;
