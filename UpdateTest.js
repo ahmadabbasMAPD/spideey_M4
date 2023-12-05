@@ -62,7 +62,7 @@ const UpdateTest = ({ route }) => {
     }
   
     // Set patientID from route params
-    setPatientID(patientIDFromRoute);
+    //setPatientID(patientIDFromRoute);
   
     // Set initial values based on patientDetails
     if (patientDetails) {

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 const PatientDetails = ({ route, navigation }) => {
-  const { patientID } = route.params || {};
+  const { patientID } = route.params;
   const [patientDetails, setPatientDetails] = useState({});
   const updatedCriticalInfo = route.params?.updatedCriticalInfo;
   
@@ -20,6 +20,7 @@ const PatientDetails = ({ route, navigation }) => {
   }, [updatedCriticalInfo]);
 
   const fetchPatientDetails = async () => {
+    
     try {
       const response = await axios.get(`http://127.0.0.1:5000/Patients/${patientID}`);
       if (response.data && response.data.tests && response.data.tests.length > 0) {
@@ -53,6 +54,7 @@ const PatientDetails = ({ route, navigation }) => {
   };
 
   const handleDeleteTest = async () => {
+    console.log(patientDetails._id);
   try {
     if (!patientDetails._id) {
       console.error('Error: Test ID is missing. Patient details:', patientDetails);
